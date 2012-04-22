@@ -1,0 +1,307 @@
+--
+-- PostgreSQL database dump
+--
+
+SET statement_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+--
+-- Name: uuid-ossp; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION "uuid-ossp"; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION "uuid-ossp" IS 'generate universally unique identifiers (UUIDs)';
+
+
+SET search_path = public, pg_catalog;
+
+--
+-- Name: todo_status; Type: TYPE; Schema: public; Owner: hyperload
+--
+
+CREATE TYPE todo_status AS (
+	id_todo integer,
+	name character varying(256),
+	status_id integer,
+	status_name character varying(50),
+	is_shared boolean,
+	priority integer
+);
+
+
+ALTER TYPE public.todo_status OWNER TO hyperload;
+
+--
+-- Name: addfbuser(bigint); Type: FUNCTION; Schema: public; Owner: hyperload
+--
+
+CREATE FUNCTION addfbuser(fbuserid bigint) RETURNS boolean
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+    if not (case when (select true from "user" where facebook_user_id = fbuserid limit 1) then true else false end) then
+        insert into "user"(facebook_user_id) values(fbuserid);
+    end if;
+
+    return true;
+END;
+$$;
+
+
+ALTER FUNCTION public.addfbuser(fbuserid bigint) OWNER TO hyperload;
+
+--
+-- Name: addresource(character varying, character varying, bigint); Type: FUNCTION; Schema: public; Owner: hyperload
+--
+
+CREATE FUNCTION addresource(resourcealias character varying, resourcedomain character varying, outeruserid bigint) RETURNS boolean
+    LANGUAGE plpgsql
+    AS $$
+declare
+    new_resource_id bigint;
+    local_user_id bigint;
+    local_priority integer;
+BEGIN
+    insert into resource ("alias", "domain") values (resourcealias, resourcedomain) returning id_resource
+        into new_resource_id;
+    insert into user_resource values (new_resource_id, (select * from getuserid(outeruserid)));
+    
+    return true;
+END;
+$$;
+
+
+ALTER FUNCTION public.addresource(resourcealias character varying, resourcedomain character varying, outeruserid bigint) OWNER TO hyperload;
+
+--
+-- Name: id_resource_seq; Type: SEQUENCE; Schema: public; Owner: hyperload
+--
+
+CREATE SEQUENCE id_resource_seq
+    START WITH 0
+    INCREMENT BY 1
+    MINVALUE 0
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.id_resource_seq OWNER TO hyperload;
+
+--
+-- Name: id_resource_seq; Type: SEQUENCE SET; Schema: public; Owner: hyperload
+--
+
+SELECT pg_catalog.setval('id_resource_seq', 5, true);
+
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: resource; Type: TABLE; Schema: public; Owner: hyperload; Tablespace: 
+--
+
+CREATE TABLE resource (
+    id_resource bigint DEFAULT nextval('id_resource_seq'::regclass) NOT NULL,
+    alias character varying(256) NOT NULL,
+    domain character varying(256) NOT NULL,
+    is_verified boolean DEFAULT false NOT NULL,
+    verification_code uuid DEFAULT uuid_generate_v4() NOT NULL
+);
+
+
+ALTER TABLE public.resource OWNER TO hyperload;
+
+--
+-- Name: getresources(bigint); Type: FUNCTION; Schema: public; Owner: hyperload
+--
+
+CREATE FUNCTION getresources(outeruserid bigint) RETURNS SETOF resource
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+    return query select r.*
+        from resource as r
+        inner join user_resource as ur
+            on r.id_resource = ur.resource_id
+        where ur.user_id = (select * from getuserid(outeruserid));
+END;
+$$;
+
+
+ALTER FUNCTION public.getresources(outeruserid bigint) OWNER TO hyperload;
+
+--
+-- Name: getuserid(bigint); Type: FUNCTION; Schema: public; Owner: hyperload
+--
+
+CREATE FUNCTION getuserid(facebookuserid bigint) RETURNS bigint
+    LANGUAGE plpgsql
+    AS $$
+declare
+    local_id_user bigint;
+BEGIN
+    if not (case when (select true from "user" where facebook_user_id = facebookuserid limit 1) then true else false end) then
+        insert into "user"(facebook_user_id) values(facebookuserid);
+    end if;
+    
+    select into local_id_user * from "user" where facebook_user_id = facebookuserid limit 1;
+    
+    return local_id_user;
+END;
+$$;
+
+
+ALTER FUNCTION public.getuserid(facebookuserid bigint) OWNER TO hyperload;
+
+--
+-- Name: id_user_seq; Type: SEQUENCE; Schema: public; Owner: hyperload
+--
+
+CREATE SEQUENCE id_user_seq
+    START WITH 0
+    INCREMENT BY 1
+    MINVALUE 0
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.id_user_seq OWNER TO hyperload;
+
+--
+-- Name: id_user_seq; Type: SEQUENCE SET; Schema: public; Owner: hyperload
+--
+
+SELECT pg_catalog.setval('id_user_seq', 16, true);
+
+
+--
+-- Name: user; Type: TABLE; Schema: public; Owner: hyperload; Tablespace: 
+--
+
+CREATE TABLE "user" (
+    id_user bigint DEFAULT nextval('id_user_seq'::regclass) NOT NULL,
+    facebook_user_id bigint NOT NULL
+);
+
+
+ALTER TABLE public."user" OWNER TO hyperload;
+
+--
+-- Name: user_resource; Type: TABLE; Schema: public; Owner: hyperload; Tablespace: 
+--
+
+CREATE TABLE user_resource (
+    resource_id bigint NOT NULL,
+    user_id bigint NOT NULL
+);
+
+
+ALTER TABLE public.user_resource OWNER TO hyperload;
+
+--
+-- Data for Name: resource; Type: TABLE DATA; Schema: public; Owner: hyperload
+--
+
+COPY resource (id_resource, alias, domain, is_verified, verification_code) FROM stdin;
+4	test	test.com	f	eae34b75-981d-4e66-b227-e8e9a8846c80
+5	gshdgsfhd	ghsadfghsadfg.ru	f	77badebd-882b-4710-8d07-85981b8772f8
+\.
+
+
+--
+-- Data for Name: user; Type: TABLE DATA; Schema: public; Owner: hyperload
+--
+
+COPY "user" (id_user, facebook_user_id) FROM stdin;
+13	100002546805446
+\.
+
+
+--
+-- Data for Name: user_resource; Type: TABLE DATA; Schema: public; Owner: hyperload
+--
+
+COPY user_resource (resource_id, user_id) FROM stdin;
+4	13
+5	13
+\.
+
+
+--
+-- Name: resource_pkey; Type: CONSTRAINT; Schema: public; Owner: hyperload; Tablespace: 
+--
+
+ALTER TABLE ONLY resource
+    ADD CONSTRAINT resource_pkey PRIMARY KEY (id_resource);
+
+
+--
+-- Name: user_pkey; Type: CONSTRAINT; Schema: public; Owner: hyperload; Tablespace: 
+--
+
+ALTER TABLE ONLY "user"
+    ADD CONSTRAINT user_pkey PRIMARY KEY (id_user);
+
+
+--
+-- Name: user_facebook_user_id_idx; Type: INDEX; Schema: public; Owner: hyperload; Tablespace: 
+--
+
+CREATE INDEX user_facebook_user_id_idx ON "user" USING btree (facebook_user_id);
+
+
+--
+-- Name: fk_user_resource_resource; Type: FK CONSTRAINT; Schema: public; Owner: hyperload
+--
+
+ALTER TABLE ONLY user_resource
+    ADD CONSTRAINT fk_user_resource_resource FOREIGN KEY (resource_id) REFERENCES resource(id_resource);
+
+
+--
+-- Name: fk_user_resource_user; Type: FK CONSTRAINT; Schema: public; Owner: hyperload
+--
+
+ALTER TABLE ONLY user_resource
+    ADD CONSTRAINT fk_user_resource_user FOREIGN KEY (user_id) REFERENCES "user"(id_user);
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
