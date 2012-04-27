@@ -29,9 +29,9 @@ hyperload._access = function(){
                 "scope=https://www.googleapis.com/auth/userinfo.email+" +
                 "https://www.googleapis.com/auth/userinfo.profile&" +
                 "response_type=token&" +
-                "redirect_uri=http://hyperload.net/access/gglcallbackhandler&" +
+                "redirect_uri=http://picpuk.ru/access/gglcallbackhandler&" +
                 "state=/profile&" +
-                "client_id=863631441711.apps.googleusercontent.com","_blank",
+                "client_id=61422159234.apps.googleusercontent.com","_blank",
                 "height=400,width=400,status=yes,toolbar=no,menubar=no,location=no");
         };
         
