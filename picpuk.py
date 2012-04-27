@@ -10,7 +10,7 @@ from auth import access as webAuth
 import resources
 
 
-class hyperload(object):
+class picpuk(object):
     resources = resources.resources()
     access = webAuth.access()
     
@@ -37,6 +37,6 @@ cherrypy.config.update({'error_page.default': error_page_default})
 
 
 
-hyperloadconf = os.path.join(os.path.dirname(__file__), "hyperload.conf")
+hyperloadconf = os.path.join(os.path.dirname(__file__), "picpuk.conf")
 
-cherrypy.quickstart(hyperload(), config=hyperloadconf)
+cherrypy.quickstart(picpuk(), config=hyperloadconf)
