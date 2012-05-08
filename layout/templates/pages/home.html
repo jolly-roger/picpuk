@@ -89,6 +89,34 @@
             }).dialog("open");
         });
 	});
+	
+	$("#upload").button().click(function(){
+		$('{% include "dialogs/upload.html" %}').dialog({
+			autoOpen: false,
+			height: 400,
+			width: 450,
+			modal: true,
+			buttons: {
+				"Add": function() {
+					var filePath = $("#filePath");
+					var allFields = $([]).add(filePath);
+					var bValid = true;
+					
+					allFields.removeClass( "ui-state-error" );
+
+					if (bValid) {
+						var filePathVal = filePath.val();
+						
+						$.post("/upload", {filePath: filePathVal});
+						$( this ).dialog( "close" );
+					}
+				},
+				Cancel: function() {
+					$( this ).dialog( "close" );
+				}
+			}
+		}).dialog("open");
+	});
 	</script>
 
 <div id="resources-container" class="ui-widget">
@@ -107,5 +135,6 @@
 	</table>
 </div>
 <button id="add-resource">Add resource</button>
+<button id="upload">Upload</button>
 
 {% endblock %}
