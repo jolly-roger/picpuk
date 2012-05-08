@@ -106,6 +106,8 @@
 						if (bValid) {
 							var filePathVal = filePath.val();
 							
+							alert($("#upload-form-data").serialize());
+							
 							$.post("/upload", $("#upload-form-data").serialize());
 							$( this ).dialog( "close" );
 						}
