@@ -1,9 +1,9 @@
 <div id="upload-form" title="Upload">\
 	<p class="validateTips">All form fields are required.</p>\
-	<form id="upload-form-data" enctype="multipart/form-data">\
+	<form>\
         <fieldset>\
             <label for="alias">Alias</label>\
-            <input type="file" name="filePath" id="filePath" />\
+            <input id="fileupload" type="file" name="files[]" data-url="/upload" multiple />\
         </fieldset>\
 	</form>\
 </div>

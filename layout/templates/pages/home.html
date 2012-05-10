@@ -19,7 +19,7 @@
 		.validateTips { border: 1px solid transparent; padding: 0.3em; }
 	</style>
     
-	<script>
+<script type="text/javascript">
 	$(function() {
         $("#logoutBtn").click(hyperload.access.logout);
         
@@ -97,20 +97,32 @@
 				modal: true,
 				buttons: {
 					"Add": function() {
-						var filePath = $("#filePath");
-						var allFields = $([]).add(filePath);
-						var bValid = true;
 						
-						allFields.removeClass( "ui-state-error" );
-	
-						if (bValid) {
-							var filePathVal = filePath.val();
-							
-							alert($("#upload-form-data"));
-							
-							$.post("/upload", $("#upload-form-data").serialize());
-							$( this ).dialog( "close" );
-						}
+						$('#fileupload').fileupload({
+							dataType: 'json',
+							done: function (e, data) {
+								//$.each(data.result, function (index, file) {
+								//	$('<p/>').text(file.name).appendTo(document.body);
+								//});
+								
+								$( this ).dialog( "close" );
+							}
+						});
+
+						//var filePath = $("#filePath");
+						//var allFields = $([]).add(filePath);
+						//var bValid = true;
+						//
+						//allFields.removeClass( "ui-state-error" );
+						//
+						//if (bValid) {
+						//	var filePathVal = filePath.val();
+						//	
+						//	alert($("#upload-form-data"));
+						//	
+						//	$.post("/upload", $("#upload-form-data").serialize());
+						//	$( this ).dialog( "close" );
+						//}
 					},
 					Cancel: function() {
 						$( this ).dialog( "close" );
@@ -119,7 +131,7 @@
 			}).dialog("open");
 		});
 	});
-	</script>
+</script>
 
 <div id="resources-container" class="ui-widget">
 	<h1>Resources:</h1>

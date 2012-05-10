@@ -1,3 +1,8 @@
+{% include "js/blueimp-jQuery-File-Upload/js/vendor/jquery.ui.widget.js" %}
+{% include "js/blueimp-jQuery-File-Upload/js/jquery.iframe-transport.js" %}
+{% include "js/blueimp-jQuery-File-Upload/js/jquery.fileupload.js" %}
+
+
 function addResource(id, alias, domain, isVerified){
     var resourceHtml = "<tr>" +
         "<td>" + alias + "</td>" + 
