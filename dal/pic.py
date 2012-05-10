@@ -15,5 +15,5 @@ class pic(base.base):
         return result[0][0]
         
     def getLast(self, count):
-        self.cur.execute("select id_pic from pic order by id_pc desc limit %s;", (count,))
+        self.cur.execute("select id_pic from pic order by id_pic desc limit %s;", (count,))
         return self.cur.fetchall()
