@@ -7,11 +7,11 @@ from layout import layout
 from auth import isAuthorized as authorization
 from auth import access as webAuth
 
-import resources
+import pics
 
 
 class picpuk(object):
-    resources = resources.resources()
+    pics = pics.pics()
     access = webAuth.access()
     
     @cherrypy.expose
@@ -28,15 +28,6 @@ class picpuk(object):
         cherrypy.response.headers['Content-Type'] = "text/javascript"
         
         return layout.getJS()
-    
-    @cherrypy.expose
-    @authorization.isAuthorized
-    def upload(self, fileContent):
-        open(cherrypy.request.app.config["hyperload"]["base_dir"] + "imgs/test.jpg", "wb").write(
-            fileContent.file.read())
-        
-        
-        #cherrypy.log.error(str(fileContent.file.read()))
 
 
 def error_page_default(status, message, traceback, version):
