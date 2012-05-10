@@ -30,4 +30,4 @@ class pics(object):
        
     @cherrypy.expose 
     def get(self, fileName):
-        return open(cherrypy.request.app.config["hyperload"]["base_dir"] + "pics/" + fileName, "rd").read()
+        return open(cherrypy.request.app.config["hyperload"]["base_dir"] + "pics/" + fileName, "rb").read()
