@@ -26,6 +26,4 @@ class pics(object):
         picIds = p.getLast(10)
         p.close()
         
-        cherrypy.log.error(picIds)
-        
         return  json.dumps(picIds)
