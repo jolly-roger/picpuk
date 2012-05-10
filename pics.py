@@ -17,5 +17,5 @@ class pics(object):
         picId = p.add(auth.user.getUserId())
         p.close()
         
-        open(cherrypy.request.app.config["hyperload"]["base_dir"] + str(picId) + ".jpg", "wb").write(
+        open(cherrypy.request.app.config["hyperload"]["base_dir"] + "pics" + str(picId) + ".jpg", "wb").write(
             fileContent.file.read())
