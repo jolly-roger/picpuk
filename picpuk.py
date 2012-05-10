@@ -31,7 +31,7 @@ class picpuk(object):
     
     @cherrypy.expose
     @authorization.isAuthorized
-    def upload(self, filePath):
+    def upload(self, fileContent):
         cherrypy.log.error(filePath.read())
 
 
