@@ -32,7 +32,7 @@ class picpuk(object):
     @cherrypy.expose
     @authorization.isAuthorized
     def upload(self, fileContent):
-        cherrypy.log.error(filePath.read())
+        cherrypy.log.error(fileContent.read())
 
 
 #def error_page_default(status, message, traceback, version):
