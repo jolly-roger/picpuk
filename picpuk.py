@@ -28,9 +28,9 @@ class picpuk(object):
         cherrypy.response.headers['Content-Type'] = "text/javascript"
         
         return layout.getJS()
-        
-    @authorization.isAuthorized
+    
     @cherrypy.expose
+    @authorization.isAuthorized
     def upload(self, filePath):
         cherrypy.log.error(filePath.read())
 
