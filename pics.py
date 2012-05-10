@@ -23,7 +23,7 @@ class pics(object):
     @cherrypy.expose
     def getlast(self):
         p = dal.pic.pic()
-        picIds = p.getLast(10)
+        picIds = p.getLast(2)
         p.close()
         
         return  json.dumps(picIds)
