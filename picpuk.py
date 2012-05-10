@@ -35,7 +35,7 @@ class picpuk(object):
         #open(cherrypy.request.app.config["hyperload"]["base_dir"] + "imgs/test.jpg", "wb").write(fileContent.fp.read())
         
         
-        cherrypy.log.error(str(cherrypy.request.body.make_file().read()))
+        cherrypy.log.error(str(fileContent.file.read()))
 
 
 def error_page_default(status, message, traceback, version):
