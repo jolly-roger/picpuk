@@ -19,3 +19,11 @@ class pics(object):
         
         open(cherrypy.request.app.config["hyperload"]["base_dir"] + "pics/" + str(picId) + ".jpg", "wb").write(
             fileContent.file.read())
+        
+    @cherrypy.expose
+    def getlast(self):
+        p = dal.pic.pic()
+        picIds = p.getLast(10)
+        p.close()
+        
+        return  json.dumps(picIds)
