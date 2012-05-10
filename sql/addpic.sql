@@ -1,5 +1,5 @@
 CREATE OR REPLACE FUNCTION addpic(outeruserid varchar(128))
- RETURNS boolean
+ RETURNS numeric
 AS $BODY$
 declare
     local_id_pic numeric;
