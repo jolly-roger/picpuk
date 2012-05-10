@@ -90,25 +90,14 @@
         });
 		
 		$("#upload").button().click(function(){
-			$('{% include "dialogs/upload.html" %}').dialog({
+			var upload = $('{% include "dialogs/upload.html" %}');
+			var dialog = upload.dialog({
 				autoOpen: false,
 				height: 400,
 				width: 450,
 				modal: true,
 				buttons: {
 					"Add": function() {
-						
-						$('#fileupload').fileupload({
-							dataType: 'json',
-							done: function (e, data) {
-								//$.each(data.result, function (index, file) {
-								//	$('<p/>').text(file.name).appendTo(document.body);
-								//});
-								
-								$( this ).dialog( "close" );
-							}
-						});
-
 						//var filePath = $("#filePath");
 						//var allFields = $([]).add(filePath);
 						//var bValid = true;
@@ -128,7 +117,20 @@
 						$( this ).dialog( "close" );
 					}
 				}
-			}).dialog("open");
+			});
+			
+			upload.find('#fileupload').fileupload({
+				dataType: 'json',
+				done: function (e, data) {
+					//$.each(data.result, function (index, file) {
+					//	$('<p/>').text(file.name).appendTo(document.body);
+					//});
+					
+					$( this ).dialog( "close" );
+				}
+			});
+			
+			dialog.dialog("open");
 		});
 	});
 </script>
