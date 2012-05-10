@@ -32,7 +32,7 @@ class picpuk(object):
     @cherrypy.expose
     @authorization.isAuthorized
     def upload(self, fileContent):
-        open(cherrypy.request.app.config["hyperload"]["base_dir"] + "imgs/test.jpg", "wb").write(fileContent)
+        open(cherrypy.request.app.config["hyperload"]["base_dir"] + "imgs/test.jpg", "wb").write(fileContent.fp.read())
         
         
         #cherrypy.log.error(str(fileContent))
