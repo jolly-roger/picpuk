@@ -38,6 +38,20 @@
     &nbsp;
     <a href="#" id="gglLoginBtn">Login with Google</a>
     
-    <img src="imgs/test.jpg" />
+    <script type="text/javascript">
+        $(function() {
+            $.getJSON("/pics/getlast", function(data) {
+                var lastPics = $("#lastPics");
+                
+                $.each(data, function(key, val) {
+                  lastPics.append("<img src=\"" + val[0] + ".jpg\" />" );
+                });
+              });
+        });
+    </script>
+    
+    <div id="lastPics">
+        
+    </div>
 
 {% endblock %}
