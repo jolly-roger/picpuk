@@ -27,3 +27,7 @@ class pics(object):
         p.close()
         
         return  json.dumps(picIds)
+       
+    @cherrypy.expose 
+    def get(self, fileName):
+        return open(cherrypy.request.app.config["hyperload"]["base_dir"] + "pics/" + fileName, "rd").read()
