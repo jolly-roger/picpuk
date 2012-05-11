@@ -24,7 +24,7 @@ class pics(object):
         srcFileObj = open(srcFile, "wb")
         srcFileObj.write(fileContent.file.read())
         srcFileObj.flush()
-        os.fsync(srcFileObj)
+        os.fsync(srcFileObj.fileno())
         srcFileObj.close()
         
         resizeFile = cherrypy.request.app.config["hyperload"]["base_dir"] + "pics/" + str(picId) + "_200x200.jpg"
