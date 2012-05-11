@@ -1,6 +1,7 @@
 import cherrypy
 import json
 import urllib.request
+import subprocess
 
 import dal.pic
 import auth.user
@@ -17,8 +18,13 @@ class pics(object):
         picId = p.add(auth.user.getUserId())
         p.close()
         
-        open(cherrypy.request.app.config["hyperload"]["base_dir"] + "pics/" + str(picId) + ".jpg", "wb").write(
-            fileContent.file.read())
+        srcFile = cherrypy.request.app.config["hyperload"]["base_dir"] + "pics/" + str(picId) + ".jpg"
+        
+        open(srcFile, "wb").write(fileContent.file.read())
+        
+        resizeFile = cherrypy.request.app.config["hyperload"]["base_dir"] + "pics/" + str(picId) + "_200x200.jpg"
+        
+        subprocess.call(["convert", srcFile, "-resize '200x200'", ])
         
     @cherrypy.expose
     def getlast(self):
