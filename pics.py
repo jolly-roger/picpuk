@@ -20,7 +20,8 @@ class pics(object):
         
         srcFile = cherrypy.request.app.config["hyperload"]["base_dir"] + "pics/" + str(picId) + ".jpg"
         
-        open(srcFile, "wb").write(fileContent.file.read()).close()
+        srcFileObj = open(srcFile, "wb").write(fileContent.file.read())
+        srcFileObj.close()
         
         resizeFile = cherrypy.request.app.config["hyperload"]["base_dir"] + "pics/" + str(picId) + "_200x200.jpg"
         
