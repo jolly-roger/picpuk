@@ -21,7 +21,7 @@ class pics(object):
         
         srcFile = cherrypy.request.app.config["hyperload"]["base_dir"] + "pics/" + str(picId) + ".jpg"
         
-        srcFileObj = open(srcFile, "wb")
+        srcFileObj = open(srcFile, "wb", 0)
         srcFileObj.write(fileContent.file.read())
         srcFileObj.flush()
         os.fsync(srcFileObj.fileno())
@@ -30,10 +30,10 @@ class pics(object):
         
         resizeFile = cherrypy.request.app.config["hyperload"]["base_dir"] + "pics/" + str(picId) + "_200x200.jpg"
         
-        cherrypy.log.error(str(os.path.exists(srcFile)))
+        #cherrypy.log.error(str(os.path.exists(srcFile)))
         
         #subprocess.call("convert " + srcFile + " -resize '200x200' " + resizeFile)
-        #subprocess.call("cat " + srcFile)
+        subprocess.call("cat " + srcFile)
         
     @cherrypy.expose
     def getlast(self):
