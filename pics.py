@@ -24,7 +24,7 @@ class pics(object):
         
         resizeFile = cherrypy.request.app.config["hyperload"]["base_dir"] + "pics/" + str(picId) + "_200x200.jpg"
         
-        subprocess.call(["convert", srcFile, "-resize '200x200'", resizeFile])
+        subprocess.call(["convert " + srcFile + " -resize '200x200' " + resizeFile])
         
     @cherrypy.expose
     def getlast(self):
