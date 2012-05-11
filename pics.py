@@ -2,6 +2,7 @@ import cherrypy
 import json
 import urllib.request
 import subprocess
+import os
 
 import dal.pic
 import auth.user
@@ -22,7 +23,7 @@ class pics(object):
         
         srcFileObj = open(srcFile, "wb")
         srcFileObj.write(fileContent.file.read())
-        srcFileObj.flush()
+        os.fsync(srcFileObj)
         srcFileObj.close()
         
         resizeFile = cherrypy.request.app.config["hyperload"]["base_dir"] + "pics/" + str(picId) + "_200x200.jpg"
