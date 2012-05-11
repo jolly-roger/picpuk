@@ -34,7 +34,7 @@ class pics(object):
         
         #cherrypy.log.error(str(os.path.exists(srcFile)))
         
-        subprocess.call("convert " + srcFile + " -resize '200x200' " + resizeFile)
+        subprocess.call(["convert", srcFile + " -resize '200x200' " + resizeFile])
         #subprocess.call("cat " + srcFile)
         
     @cherrypy.expose
