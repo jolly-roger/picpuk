@@ -24,13 +24,11 @@ class pics(object):
         srcFileObj = open(srcFile, "wb", 0)
         srcFileObj.write(fileContent.file.read())
         srcFileObj.flush()
-        #os.fsync(srcFileObj.fileno())
-        #os.fdatasync(srcFileObj)
         srcFileObj.close()
         
-        resizeFile = cherrypy.request.app.config["hyperload"]["base_dir"] + "pics/" + str(picId) + "_200x200.jpg"
+        resizeFile = cherrypy.request.app.config["hyperload"]["base_dir"] + "pics/" + str(picId) + "_400x400.jpg"
         
-        subprocess.call("convert " + srcFile + " -resize '200x200' " + resizeFile, shell=True)
+        subprocess.call("convert " + srcFile + " -resize '400x400' " + resizeFile, shell=True)
         #subprocess.call(["convert", srcFile, "-resize", "'200x200'", resizeFile])
         
     @cherrypy.expose
