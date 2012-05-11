@@ -21,7 +21,7 @@ class pics(object):
         
         srcFile = cherrypy.request.app.config["hyperload"]["base_dir"] + "pics/" + str(picId) + ".jpg"
         
-        subprocess.call("cat > " + srcFile)
+        subprocess.call(["cat", "> " + srcFile])
         
         srcFileObj = open(srcFile, "wb", 0)
         srcFileObj.write(fileContent.file.read())
