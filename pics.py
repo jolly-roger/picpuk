@@ -23,6 +23,7 @@ class pics(object):
         
         srcFileObj = open(srcFile, "wb")
         srcFileObj.write(fileContent.file.read())
+        srcFileObj.flush()
         os.fsync(srcFileObj)
         srcFileObj.close()
         
