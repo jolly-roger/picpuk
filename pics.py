@@ -50,4 +50,4 @@ class pics(object):
         userPics = p.getUserPics(auth.user.getUserId())
         p.close()
         
-        return userPics
+        return json.dumps(userPics)
