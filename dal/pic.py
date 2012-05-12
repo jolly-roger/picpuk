@@ -17,3 +17,8 @@ class pic(base.base):
     def getLast(self, count):
         self.cur.callproc("getlastpics", [count])
         return self.cur.fetchall()
+        
+    def getUserPics(self):
+        self.cur.callproc("getuserpics", [userId])
+        self.conn.commit()
+        return self.cur.fetchall()

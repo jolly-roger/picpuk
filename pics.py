@@ -42,3 +42,12 @@ class pics(object):
     @cherrypy.expose 
     def get(self, fileName):
         return open(cherrypy.request.app.config["hyperload"]["base_dir"] + "pics/" + fileName, "rb").read()
+        
+    @cherrypy.expose
+    @authorization.isAuthorized
+    def getuserpics(self):
+        p = dal.pic.pic()
+        userPics = p.getUserPics(auth.user.getUserId())
+        p.close()
+        
+        return userPics
