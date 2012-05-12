@@ -41,7 +41,12 @@ class pics(object):
        
     @cherrypy.expose 
     def get(self, fileName):
-        return open(cherrypy.request.app.config["hyperload"]["base_dir"] + "pics/" + fileName, "rb").read()
+        filePath = cherrypy.request.app.config["hyperload"]["base_dir"] + "pics/" + fileName
+        
+        if os.path.exists(filePath):
+            return open(filePath, "rb").read()
+        else:
+            return ""
         
     @cherrypy.expose
     @authorization.isAuthorized
