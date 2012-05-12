@@ -5,7 +5,7 @@
 
 {% block headerContent%}
     
-    {% if {{isAuthorized()}} %}
+    {% if isAuthorized() %}
         <a href="/home" >Домой</a>
     {% else %}
         {% include "widgets/loginbuttons.html"%}
