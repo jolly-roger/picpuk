@@ -1,11 +1,11 @@
-<div id="upload-form" title="Upload">\
-	<p class="validateTips">All form fields are required.</p>\
-	<form id="fileupload">\
-		<label for="alias">Alias</label>\
-		<input id="file-content" type="file" name="fileContent" />\
-		<button class="btn btn-primary start" type="submit">\
-			<i class="icon-upload icon-white"></i>\
-			<span>Start upload</span>\
-		</button>\
-	</form>\
-</div>
+<div id="fileupload" title="Upload">\
+    <form action="/pics/add" method="POST" enctype="multipart/form-data">\
+        <div class="fileupload-buttonbar">\
+            <label class="fileinput-button">\
+                <span>Add files...</span>\
+                <input id="file" type="file" name="fileContent">\
+            </label>\
+            <button type="submit" class="start">Start upload</button>\
+        </div>\
+    </form>\
+</div>\

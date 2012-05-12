@@ -58,15 +58,6 @@
 			});
 			
 			upload.find('#fileupload').fileupload({
-				url: "/pics/add",
-				dataType: 'json',
-				done: function (e, data) {
-					//$.each(data.result, function (index, file) {
-					//	$('<p/>').text(file.name).appendTo(document.body);
-					//});
-					
-					$( this ).dialog( "close" );
-				}
 			});
 			
 			dialog.dialog("open");
