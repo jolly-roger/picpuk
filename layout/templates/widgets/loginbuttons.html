@@ -1,0 +1,33 @@
+<div id="fb-root"></div>
+<script>
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId      : '376067512445754',
+        status     : true, 
+        cookie     : true,
+        xfbml      : true,
+        oauth      : true,
+      });
+    };
+    (function(d){
+       var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
+       js = d.createElement('script'); js.id = id; js.async = true;
+       js.src = "//connect.facebook.net/en_US/all.js";
+       d.getElementsByTagName('head')[0].appendChild(js);
+     }(document));
+    
+    $(function() {
+        $("#fbLoginBtn").click(function(){
+            return hyperload.access.login("fb");
+        });
+        $("#gglLoginBtn").click(function(){
+            return hyperload.access.login("ggl");
+        });
+    });
+</script>
+
+<a id="fbLoginBtn" class="fb_button fb_button_medium">
+    <span class="fb_button_text">Login with Facebook</span>
+</a>
+&nbsp;
+<a href="#" id="gglLoginBtn">Login with Google</a>
