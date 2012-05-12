@@ -41,6 +41,8 @@ class pics(object):
        
     @cherrypy.expose 
     def get(self, fileName):
+        cherrypy.response.headers['Content-Type'] = "image/jpeg"
+        
         filePath = cherrypy.request.app.config["hyperload"]["base_dir"] + "pics/" + fileName
         
         if os.path.exists(filePath):

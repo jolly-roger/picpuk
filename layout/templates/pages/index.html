@@ -21,7 +21,12 @@
                 var lastPics = $("#lastPics");
                 
                 $.each(data, function(key, val) {
-                  lastPics.append("<img id=\"pic-post\" src=\"/pics/get/" + val[0] + "_500x500.jpg\" /><br />" );
+                  lastPics.append("<div id=\"pic-post\">" +
+                            "<img src=\"/pics/get/" + val[0] + "_500x500.jpg\" /><br />" +
+                            "<div class=\"fb-like\" data-href=\"http://picpuk.ru/pics/get/" +
+                                val[0] + "_500x500.jpg\" data-send=\"false\" data-layout=\"button_count\" " +
+                                "data-width=\"450\" data-show-faces=\"false\"></div>" +
+                        "</div>");
                 });
               });
         });
