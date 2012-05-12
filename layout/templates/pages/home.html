@@ -71,4 +71,20 @@
 
 <button id="upload">Upload</button>
 
+<script type="text/javascript">
+	$(function() {
+		$.getJSON("/pics/getuserpics", function(data) {
+			var lastPics = $("#user-pics");
+			
+			$.each(data, function(key, val) {
+			  lastPics.append("<img id=\"pic-post\" src=\"/pics/get/" + val[0] + "_400x400.jpg\" /><br />" );
+			});
+		  });
+	});
+</script>
+
+<div id="user-pics">
+	
+</div>
+
 {% endblock %}
