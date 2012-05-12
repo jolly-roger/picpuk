@@ -2,6 +2,8 @@ import cherrypy
 
 from jinja2 import Environment, FileSystemLoader
 
+import auth.authorization
+
 
 env = None
 
@@ -12,6 +14,7 @@ def getenv():
     if env is None:
         env = Environment(loader = FileSystemLoader(cherrypy.request.app.config["hyperload"]["base_dir"] + \
             "layout/templates"))
+        env.globals["isAuthorized"] = auth.authorization.isAuthorized
         
     return env
 
