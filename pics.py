@@ -26,9 +26,9 @@ class pics(object):
         srcFileObj.flush()
         srcFileObj.close()
         
-        resizeFile = cherrypy.request.app.config["hyperload"]["base_dir"] + "pics/" + str(picId) + "_600x600.jpg"
+        resizeFile = cherrypy.request.app.config["hyperload"]["base_dir"] + "pics/" + str(picId) + "_500x500.jpg"
         
-        subprocess.call("convert " + srcFile + " -resize '600x600' " + resizeFile, shell=True)
+        subprocess.call("convert " + srcFile + " -resize '500x500' " + resizeFile, shell=True)
         #subprocess.call(["convert", srcFile, "-resize", "'200x200'", resizeFile])
         
     @cherrypy.expose
