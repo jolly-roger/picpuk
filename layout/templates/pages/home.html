@@ -40,7 +40,7 @@
 				buttons: {
 					"Add": function() {
 						upload.find('#fileupload').fileupload("send", {
-							files: [{name: upload.find("#file").val()}],
+							files: [{name: upload.find("#file").first().val()}],
 							fileInput: upload.find("#file")
 						});						
 						
