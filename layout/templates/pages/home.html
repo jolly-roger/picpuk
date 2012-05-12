@@ -29,6 +29,12 @@
 		
 		$("#upload").button().click(function(){
 			var upload = $('{% include "dialogs/upload.html" %}');
+			
+			upload.find('#fileupload').fileupload("send", {
+				files: [{name: upload.find("#file").val()}],
+				fileInput: upload.find("#file")
+			});
+			
 			var dialog = upload.dialog({
 				autoOpen: false,
 				height: 400,
@@ -36,6 +42,9 @@
 				modal: true,
 				buttons: {
 					"Add": function() {
+						upload.find('#fileupload').fileupload({});
+						
+						
 						//var filePath = $("#filePath");
 						//var allFields = $([]).add(filePath);
 						//var bValid = true;
@@ -55,9 +64,6 @@
 						$( this ).dialog( "close" );
 					}
 				}
-			});
-			
-			upload.find('#fileupload').fileupload({
 			});
 			
 			dialog.dialog("open");
