@@ -4,9 +4,12 @@
 {% endblock%}
 
 {% block headerContent%}
-    <a href="/home" >Домой</a>
     
-    {% include "widgets/loginbuttons.html"%}
+    {% if {{isAuthorized}} %}
+        <a href="/home" >Домой</a>
+    {% else %}
+        {% include "widgets/loginbuttons.html"%}
+    {% endif %}
     
 {% endblock %}
 
