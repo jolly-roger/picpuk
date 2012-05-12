@@ -30,10 +30,7 @@
 		$("#upload").button().click(function(){
 			var upload = $('{% include "dialogs/upload.html" %}');
 			
-			upload.find('#fileupload').fileupload("send", {
-				files: [{name: upload.find("#file").val()}],
-				fileInput: upload.find("#file")
-			});
+			upload.find('#fileupload').fileupload({});
 			
 			var dialog = upload.dialog({
 				autoOpen: false,
@@ -42,8 +39,10 @@
 				modal: true,
 				buttons: {
 					"Add": function() {
-						upload.find('#fileupload').fileupload({});
-						
+						upload.find('#fileupload').fileupload("send", {
+							files: [{name: upload.find("#file").val()}],
+							fileInput: upload.find("#file")
+						});						
 						
 						//var filePath = $("#filePath");
 						//var allFields = $([]).add(filePath);
