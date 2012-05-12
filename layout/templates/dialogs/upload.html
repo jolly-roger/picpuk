@@ -1,9 +1,11 @@
 <div id="upload-form" title="Upload">\
 	<p class="validateTips">All form fields are required.</p>\
-	<form>\
-        <fieldset>\
-            <label for="alias">Alias</label>\
-            <input id="fileupload" type="file" name="fileContent" data-url="/pics/add" />\
-        </fieldset>\
+	<form id="fileupload">\
+		<label for="alias">Alias</label>\
+		<input id="file-content" type="file" name="fileContent" />\
+		<button class="btn btn-primary start" type="submit">\
+			<i class="icon-upload icon-white"></i>\
+			<span>Start upload</span>\
+		</button>\
 	</form>\
 </div>

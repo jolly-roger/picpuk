@@ -58,6 +58,7 @@
 			});
 			
 			upload.find('#fileupload').fileupload({
+				url: "/pics/add",
 				dataType: 'json',
 				done: function (e, data) {
 					//$.each(data.result, function (index, file) {
