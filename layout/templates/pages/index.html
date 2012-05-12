@@ -49,7 +49,7 @@
                 var lastPics = $("#lastPics");
                 
                 $.each(data, function(key, val) {
-                  lastPics.append("<img src=\"/pics/get/" + val[0] + "_400x400.jpg\" /><br />" );
+                  lastPics.append("<img id=\"pic-post\" src=\"/pics/get/" + val[0] + "_400x400.jpg\" /><br />" );
                 });
               });
         });
