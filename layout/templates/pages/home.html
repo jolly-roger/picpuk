@@ -27,7 +27,7 @@
 	$(function() {
         $("#logoutBtn").click(hyperload.access.logout);
 		
-		$("#fileupload").fileupload({});
+		//$("#fileupload").fileupload({});
 		
 		//$("#upload").button().click(function(){
 		//	var upload = $('{% include "dialogs/upload.html" %}');
@@ -71,20 +71,6 @@
 		//});
 	});
 </script>
-
-<button id="upload">Upload</button>
-
-<div id="fileupload" title="Upload">
-    <form action="/pics/add" method="POST" enctype="multipart/form-data">
-        <div class="fileupload-buttonbar">
-            <label class="fileinput-button">
-                <span>Add files...</span>
-                <input id="file" type="file" name="fileContent">
-            </label>
-            <button type="submit" class="start">Start upload</button>
-        </div>
-    </form>
-</div>
 
 <script type="text/javascript">
 	$(function() {

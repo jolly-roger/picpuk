@@ -14,22 +14,23 @@ from auth import isAuthorized as authorization
 class pics(object):
     @cherrypy.expose
     @authorization.isAuthorized
-    def add(self, fileContent):
-        p = dal.pic.pic()
-        picId = p.add(auth.user.getUserId())
-        p.close()
-        
-        srcFile = cherrypy.request.app.config["hyperload"]["base_dir"] + "pics/" + str(picId) + ".jpg"
-        
-        srcFileObj = open(srcFile, "wb", 0)
-        srcFileObj.write(fileContent.file.read())
-        srcFileObj.flush()
-        srcFileObj.close()
-        
-        resizeFile = cherrypy.request.app.config["hyperload"]["base_dir"] + "pics/" + str(picId) + "_500x500.jpg"
-        
-        subprocess.call("convert " + srcFile + " -resize '500x500' " + resizeFile, shell=True)
-        #subprocess.call(["convert", srcFile, "-resize", "'200x200'", resizeFile])
+    def add(self, fileContent = None):
+        if fileContent is not None:
+            p = dal.pic.pic()
+            picId = p.add(auth.user.getUserId())
+            p.close()
+            
+            srcFile = cherrypy.request.app.config["hyperload"]["base_dir"] + "pics/" + str(picId) + ".jpg"
+            
+            srcFileObj = open(srcFile, "wb", 0)
+            srcFileObj.write(fileContent.file.read())
+            srcFileObj.flush()
+            srcFileObj.close()
+            
+            resizeFile = cherrypy.request.app.config["hyperload"]["base_dir"] + "pics/" + str(picId) + "_500x500.jpg"
+            
+            subprocess.call("convert " + srcFile + " -resize '500x500' " + resizeFile, shell=True)
+            #subprocess.call(["convert", srcFile, "-resize", "'200x200'", resizeFile])
         
     @cherrypy.expose
     def getlast(self):
