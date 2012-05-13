@@ -27,50 +27,62 @@
 	$(function() {
         $("#logoutBtn").click(hyperload.access.logout);
 		
-		$("#upload").button().click(function(){
-			var upload = $('{% include "dialogs/upload.html" %}');
-			
-			upload.find('#fileupload').fileupload({});
-			
-			var dialog = upload.dialog({
-				autoOpen: false,
-				height: 400,
-				width: 450,
-				modal: true,
-				buttons: {
-					"Add": function() {
-						upload.find('#fileupload').fileupload("send", {
-							files: [{name: upload.find("#file").first().val()}],
-							fileInput: upload.find("#file")
-						});						
-						
-						//var filePath = $("#filePath");
-						//var allFields = $([]).add(filePath);
-						//var bValid = true;
-						//
-						//allFields.removeClass( "ui-state-error" );
-						//
-						//if (bValid) {
-						//	var filePathVal = filePath.val();
-						//	
-						//	alert($("#upload-form-data"));
-						//	
-						//	$.post("/upload", $("#upload-form-data").serialize());
-						//	$( this ).dialog( "close" );
-						//}
-					},
-					Cancel: function() {
-						$( this ).dialog( "close" );
-					}
-				}
-			});
-			
-			dialog.dialog("open");
-		});
+		//$("#upload").button().click(function(){
+		//	var upload = $('{% include "dialogs/upload.html" %}');
+		//	
+		//	upload.find('#fileupload').fileupload({});
+		//	
+		//	var dialog = upload.dialog({
+		//		autoOpen: false,
+		//		height: 400,
+		//		width: 450,
+		//		modal: true,
+		//		buttons: {
+		//			"Add": function() {
+		//				upload.find('#fileupload').fileupload("send", {
+		//					files: [{name: upload.find("#file").first().val()}],
+		//					fileInput: upload.find("#file")
+		//				});						
+		//				
+		//				//var filePath = $("#filePath");
+		//				//var allFields = $([]).add(filePath);
+		//				//var bValid = true;
+		//				//
+		//				//allFields.removeClass( "ui-state-error" );
+		//				//
+		//				//if (bValid) {
+		//				//	var filePathVal = filePath.val();
+		//				//	
+		//				//	alert($("#upload-form-data"));
+		//				//	
+		//				//	$.post("/upload", $("#upload-form-data").serialize());
+		//				//	$( this ).dialog( "close" );
+		//				//}
+		//			},
+		//			Cancel: function() {
+		//				$( this ).dialog( "close" );
+		//			}
+		//		}
+		//	});
+		//	
+		//	dialog.dialog("open");
+		//});
 	});
 </script>
 
 <button id="upload">Upload</button>
+
+<div id="fileupload" title="Upload">
+    <form action="/pics/add" method="POST" enctype="multipart/form-data">
+        <div class="fileupload-buttonbar">
+            <label class="fileinput-button">
+                <span>Add files...</span>
+                <input id="file" type="file" name="fileContent">
+            </label>
+            <button type="submit" class="start">Start upload</button>
+        </div>
+    </form>
+</div>
 
 <script type="text/javascript">
 	$(function() {
