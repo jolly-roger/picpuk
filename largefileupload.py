@@ -52,7 +52,16 @@ class largeFileUpload(object):
 
         return out % (size, sourceData.filename, sourceData.content_type)
             
-            
+    @cherrypy.expose 
+    def get(self, fileName):
+        cherrypy.response.headers['Content-Type'] = "application/octet-stream"
+        
+        filePath = cherrypy.request.app.config["hyperload"]["base_dir"] + "pics/" + fileName
+        
+        if os.path.exists(filePath):
+            return open(filePath, "rb").read()
+        else:
+            return ""
             
     
     
