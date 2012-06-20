@@ -4,7 +4,7 @@ import cherrypy
 
 class largeFileUpload(object):
     @cherrypy.expose
-    def index(self, sourceData, doUpload):
+    def index(self):
         return """
         <html><body>
             <h2>Upload a file</h2>
@@ -18,7 +18,7 @@ class largeFileUpload(object):
         """
     
     @cherrypy.expose
-    def upload(self, sourceData, doUpload):
+    def upload(self, sourceData):
         cherrypy.response.timeout = 3600
         
         out = """<html>
