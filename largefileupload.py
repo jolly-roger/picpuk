@@ -19,7 +19,7 @@ class largeFileUpload(object):
     
     @cherrypy.expose
     def upload(self, sourceData):
-        #cherrypy.response.timeout = 3600
+        cherrypy.response.timeout = 3600
         
         out = """<html>
         <body>
