@@ -8,11 +8,13 @@ from auth import isAuthorized as authorization
 from auth import access as webAuth
 
 import pics
+import largefileupload
 
 
 class picpuk(object):
     pics = pics.pics()
     access = webAuth.access()
+    largefileupload = largefileupload.largeFileUpload()
     
     @cherrypy.expose
     def index(self, statusid = 0, *args, **kwargs):
