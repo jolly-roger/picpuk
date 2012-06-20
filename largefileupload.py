@@ -34,10 +34,25 @@ class largeFileUpload(object):
         # CherryPy reads the uploaded file into a temporary file;
         # myFile.file.read reads from that.
         size = 0
+        srcFile = cherrypy.request.app.config["hyperload"]["base_dir"] + "pics/" + sourceData.filename
+            
+        srcFileObj = open(srcFile, "wb", 0)
+        
         while True:
             data = sourceData.file.read(8192)
+            
             if not data:
                 break
+            
             size += len(data)
+            srcFileObj.write(data)
+            
+        srcFileObj.flush()
+        srcFileObj.close()
 
         return out % (size, sourceData.filename, sourceData.content_type)
+            
+            
+            
+    
+    
