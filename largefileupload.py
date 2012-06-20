@@ -4,7 +4,7 @@ import cherrypy
 
 class largeFileUpload(object):
     @cherrypy.expose
-    def index(self):
+    def index(self, sourceData, doUpload):
         return """
         <html><body>
             <h2>Upload a file</h2>
