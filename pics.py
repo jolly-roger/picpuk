@@ -51,6 +51,17 @@ class pics(object):
         else:
             return ""
         
+    @cherrypy.expose 
+    def getbyid(self, id):
+        cherrypy.response.headers['Content-Type'] = "image/jpeg"
+        
+        filePath = cherrypy.request.app.config["hyperload"]["base_dir"] + "pics/" + id + ".jpg"
+        
+        if os.path.exists(filePath):
+            return open(filePath, "rb").read()
+        else:
+            return ""
+        
     @cherrypy.expose
     @authorization.isAuthorized
     def getuserpics(self):
