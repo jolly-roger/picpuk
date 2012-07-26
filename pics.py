@@ -31,6 +31,9 @@ class pics(object):
             
             subprocess.call("convert " + srcFile + " -resize '500x500' " + resizeFile, shell=True)
             #subprocess.call(["convert", srcFile, "-resize", "'200x200'", resizeFile])
+            
+            os.chown(srcFile, 1002, 100)
+            os.chown(resizeFile, 1002, 100)
         
     @cherrypy.expose
     def getlast(self):
