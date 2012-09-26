@@ -32,13 +32,30 @@ class picpuk(object):
         return layout.getJS()
 
 
-#def error_page_default(status, message, traceback, version):
-#    return "Error"
+def error_page_default(status, message, traceback, version):
+    sender = 'www@dig-dns.com (www)'
+    recipient = 'roger@dig-dns.com'
+    
+    text = 'Request: ' + cherrypy.request.request_line + '\n\n' +\
+        'Status: ' + status + '\n\n' + 'Message: ' + message + '\n\n' +\
+        'Traceback: ' + traceback + '\n\n' + 'Version: ' + version
+    
+    msg = MIMEText(text)
+    msg['Subject'] = 'Picpuk error'
+    msg['From'] = sender
+    msg['To'] = recipient
+
+    s = smtplib.SMTP('localhost')
+    s.sendmail(sender, recipient, msg.as_string())
+    s.quit()
+    
+    return "Error"
+
+cherrypy.tree.mount(picpuk())
+
+cherrypy.config.update({'error_page.default': error_page_default})
+cherrypy.config.update({'engine.autoreload_on':False})
+
+#hyperloadconf = os.path.join(os.path.dirname(__file__), "picpuk.conf")
 #
-#cherrypy.config.update({'error_page.default': error_page_default})
-
-
-
-hyperloadconf = os.path.join(os.path.dirname(__file__), "picpuk.conf")
-
-cherrypy.quickstart(picpuk(), config=hyperloadconf)
+#cherrypy.quickstart(picpuk(), config=hyperloadconf)
