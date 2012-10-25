@@ -30,6 +30,11 @@ class picpuk(object):
         cherrypy.response.headers['Content-Type'] = "text/javascript"
         
         return layout.getJS()
+    
+    @cherrypy.expose
+    @authorization.isAuthorized
+    def upload(self):
+        return layout.getUpload()
 
 
 def error_page_default(status, message, traceback, version):

@@ -33,3 +33,7 @@ def getHome():
 def getJS():
     tmpl = getenv().get_template("js/common.js")
     return tmpl.render()
+
+def getUpload():
+    tmpl = getenv().get_template("pages/upload.html")
+    return tmpl.render()
