@@ -1,6 +1,7 @@
 import cherrypy
 import os.path
-from cherrypy import _cperror
+import smtplib
+from email.mime.text import MIMEText
 
 from layout import layout
 
