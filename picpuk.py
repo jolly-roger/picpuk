@@ -1,7 +1,7 @@
 import cherrypy
 import os.path
-import smtplib
-from email.mime.text import MIMEText
+import urllib.request
+import urllib.parse
 
 from layout import layout
 
@@ -39,23 +39,14 @@ class picpuk(object):
 
 
 def error_page_default(status, message, traceback, version):
-    sender = 'www@dig-dns.com (www)'
-    recipient = 'roger@dig-dns.com'
-    
-    text = 'Request: ' + cherrypy.request.request_line + '\n\n' +\
-        'Status: ' + status + '\n\n' + 'Message: ' + message + '\n\n' +\
-        'Traceback: ' + traceback + '\n\n' + 'Version: ' + version
-    
-    msg = MIMEText(text)
-    msg['Subject'] = 'Picpuk error'
-    msg['From'] = sender
-    msg['To'] = recipient
-
-    s = smtplib.SMTP('localhost')
-    s.sendmail(sender, recipient, msg.as_string())
-    s.quit()
-    
-    return "Error"
+    d = urllib.parse.urlencode({'status': status, 'message': message, 'traceback': traceback, 'version': version,
+        'data': json.dumps({'subject': 'Picpuk error',
+            'base': cherrypy.request.base, 'request_line': cherrypy.request.request_line})})
+    d = d.encode('utf-8')
+    req = urllib.request.Request('http://localhost:18404/sendmail')
+    req.add_header('Content-Type', 'application/x-www-form-urlencoded;charset=utf-8')
+    res = urllib.request.urlopen(req, d)
+    return res.read()
 
 cherrypy.tree.mount(picpuk())
 
