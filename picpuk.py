@@ -54,6 +54,12 @@ cherrypy.tree.mount(picpuk())
 cherrypy.config.update({'error_page.default': error_page_default})
 cherrypy.config.update({'engine.autoreload_on':False})
 
+from cherrypy.process import servers
+
+def fake_wait_for_occupied_port(host, port): return
+
+servers.wait_for_occupied_port = fake_wait_for_occupied_port
+
 #hyperloadconf = os.path.join(os.path.dirname(__file__), "picpuk.conf")
 #
 #cherrypy.quickstart(picpuk(), config=hyperloadconf)
