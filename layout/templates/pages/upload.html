@@ -5,7 +5,8 @@
 
 {% block mainContent %}
     <form action="/pics/add" enctype="multipart/form-data" method="post">
-        <input type="file" name="fileContent" size="40">
-        <input type="submit" value="Upload">
+        <input type="file" name="fileContent" size="40" />
+        <input type="text" name="fileUrl" size="40" />
+        <input type="submit" value="Upload" />
     </form>
 {% endblock %}

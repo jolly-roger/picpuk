@@ -14,7 +14,7 @@ from auth import isAuthorized as authorization
 class pics(object):
     @cherrypy.expose
     @authorization.isAuthorized
-    def add(self, fileContent = None):
+    def add(self, fileContent = None, fileUrl = None):
         if fileContent is not None:
             p = dal.pic.pic()
             picId = p.add(auth.user.getUserId())
