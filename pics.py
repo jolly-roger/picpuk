@@ -4,9 +4,9 @@ import urllib.request
 import subprocess
 import os
 
-from dal import pic as dal_pic
-from auth import user as auth_user
-from auth import isAuthorized as authorization
+from .dal import pic as dal_pic
+from .auth import user as auth_user
+from .auth import isAuthorized as authorization
 
 
 class pics(object):
