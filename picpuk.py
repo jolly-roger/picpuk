@@ -49,17 +49,10 @@ def error_page_default(status, message, traceback, version):
     res = urllib.request.urlopen(req, d)
     return res.read().decode()
 
-cherrypy.tree.mount(picpuk())
-
-cherrypy.config.update({'error_page.default': error_page_default})
-cherrypy.config.update({'engine.autoreload_on':False})
-
-from cherrypy.process import servers
-
-def fake_wait_for_occupied_port(host, port): return
-
-servers.wait_for_occupied_port = fake_wait_for_occupied_port
-
-#hyperloadconf = os.path.join(os.path.dirname(__file__), "picpuk.conf")
-#
-#cherrypy.quickstart(picpuk(), config=hyperloadconf)
+def wsgi():
+    conf = os.path.join(os.path.dirname(__file__), "picpuk.conf")
+    tree = cherrypy._cptree.Tree()
+    app = tree.mount(picpuk(), config=conf)
+    app.config.update({'/': {'error_page.default': error_page_default}})
+    tree.bind_address = (app.config['global']['server.socket_host'], app.config['global']['server.socket_port'])
+    return tree
