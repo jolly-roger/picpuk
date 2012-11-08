@@ -4,13 +4,13 @@ import os.path
 import urllib.request
 import urllib.parse
 
-from layout import layout
+from .layout import layout
 
-from auth import isAuthorized as authorization
-from auth import access as webAuth
+from .auth import isAuthorized as authorization
+from .auth import access as webAuth
 
-import pics
-import largefileupload
+from . import pics
+from . import largefileupload
 
 
 class picpuk(object):

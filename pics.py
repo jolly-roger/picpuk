@@ -4,11 +4,9 @@ import urllib.request
 import subprocess
 import os
 
-import dal.pic
-import auth.user
-
-
-from auth import isAuthorized as authorization
+from .dal import pic as dal_pic
+from .auth import user as auth_user
+from .auth import isAuthorized as authorization
 
 
 class pics(object):
@@ -16,8 +14,8 @@ class pics(object):
     @authorization.isAuthorized
     def add(self, fileContent = None, fileUrl = None):
         if fileContent is not None:
-            p = dal.pic.pic()
-            picId = p.add(auth.user.getUserId())
+            p = dal_pic.pic()
+            picId = p.add(auth_user.getUserId())
             p.close()
             
             srcFile = cherrypy.request.app.config["hyperload"]["base_dir"] + "pics/" + str(picId) + ".jpg"
@@ -34,7 +32,7 @@ class pics(object):
         
     @cherrypy.expose
     def getlast(self):
-        p = dal.pic.pic()
+        p = dal_pic.pic()
         picIds = p.getLast(10)
         p.close()
         
@@ -65,8 +63,8 @@ class pics(object):
     @cherrypy.expose
     @authorization.isAuthorized
     def getuserpics(self):
-        p = dal.pic.pic()
-        userPics = p.getUserPics(auth.user.getUserId())
+        p = dal_pic.pic()
+        userPics = p.getUserPics(auth_user.getUserId())
         p.close()
         
         return json.dumps(userPics)
