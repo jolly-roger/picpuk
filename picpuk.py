@@ -42,7 +42,8 @@ class picpuk(object):
 def error_page_default(status, message, traceback, version):
     d = urllib.parse.urlencode({'status': status, 'message': message, 'traceback': traceback, 'version': version,
         'data': json.dumps({'subject': 'Picpuk error',
-            'base': cherrypy.request.base, 'request_line': cherrypy.request.request_line})})
+            'base': cherrypy.request.base, 'request_line': cherrypy.request.request_line,
+            'headers': str(cherrypy.request.headers)})})
     d = d.encode('utf-8')
     req = urllib.request.Request('http://localhost:18404/sendmail')
     req.add_header('Content-Type', 'application/x-www-form-urlencoded;charset=utf-8')
