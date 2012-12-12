@@ -56,6 +56,9 @@ def wsgi():
     conf = os.path.join(os.path.dirname(__file__), "picpuk.conf")
     tree = cherrypy._cptree.Tree()
     app = tree.mount(picpuk(), config=conf)
-    app.config.update({'/': {'error_page.default': error_page_default}})
+    app.config.update({'/': {'error_page.default': error_page_default,
+        'tools.sessions.on': True,
+        'tools.sessions.timeout': 30,
+        'response.timeout': 3600}})
     tree.bind_address = (app.config['global']['server.socket_host'], app.config['global']['server.socket_port'])
     return tree
