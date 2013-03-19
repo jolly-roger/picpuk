@@ -54,28 +54,22 @@ class pics(object):
             if os.path.exists(filePath):
                 rd = open(filePath, "rb").read()
                 
-                d = urlencode('Yo!!!')
-                d = d.encode('utf-8')
                 req = Request('http://localhost:18404/sendmail')
                 req.add_header('Content-Type', 'application/x-www-form-urlencoded;charset=utf-8')
-                res = urlopen(req, d)
+                res = urlopen(req, 'Yo!!!')
                 
                 return rd
             else:
                 
-                d = urlencode('Fuck!!!')
-                d = d.encode('utf-8')
                 req = Request('http://localhost:18404/sendmail')
                 req.add_header('Content-Type', 'application/x-www-form-urlencoded;charset=utf-8')
-                res = urlopen(req, d)
+                res = urlopen(req, 'Fuck!!!')
                 
                 return ""
         except:
-            d = urlencode(traceback.format_exc())
-            d = d.encode('utf-8')
             req = Request('http://localhost:18404/sendmail')
             req.add_header('Content-Type', 'application/x-www-form-urlencoded;charset=utf-8')
-            res = urlopen(req, d)
+            res = urlopen(req, traceback.format_exc())
         
     @cherrypy.expose 
     def getbyid(self, id):
