@@ -4,6 +4,12 @@ import urllib.request
 import subprocess
 import os
 
+
+from urllib.request import urlopen, Request
+from urllib.parse import urlencode
+import traceback
+
+
 from .dal import pic as dal_pic
 from .auth import user as auth_user
 from .auth import isAuthorized as authorization
@@ -40,14 +46,21 @@ class pics(object):
        
     @cherrypy.expose 
     def get(self, fileName):
-        cherrypy.response.headers['Content-Type'] = "image/jpeg"
-        
-        filePath = "/home/www/picpuk/" + "pics/" + fileName
-        
-        if os.path.exists(filePath):
-            return open(filePath, "rb").read()
-        else:
-            return ""
+        try:
+            cherrypy.response.headers['Content-Type'] = "image/jpeg"
+            
+            filePath = "/home/www/picpuk/" + "pics/" + fileName
+            
+            if os.path.exists(filePath):
+                return open(filePath, "rb").read()
+            else:
+                return ""
+        except:
+            d = urlencode(traceback.format_exc())
+            d = d.encode('utf-8')
+            req = Request('http://localhost:18404/sendmail')
+            req.add_header('Content-Type', 'application/x-www-form-urlencoded;charset=utf-8')
+            res = urlopen(req, d)
         
     @cherrypy.expose 
     def getbyid(self, id):
