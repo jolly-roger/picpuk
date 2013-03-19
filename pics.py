@@ -18,14 +18,14 @@ class pics(object):
             picId = p.add(auth_user.getUserId())
             p.close()
             
-            srcFile = cherrypy.request.app.config["hyperload"]["base_dir"] + "pics/" + str(picId) + ".jpg"
+            srcFile = "/home/www/picpuk/" + "pics/" + str(picId) + ".jpg"
             
             srcFileObj = open(srcFile, "wb", 0)
             srcFileObj.write(fileContent.file.read())
             srcFileObj.flush()
             srcFileObj.close()
             
-            resizeFile = cherrypy.request.app.config["hyperload"]["base_dir"] + "pics/" + str(picId) + "_500x500.jpg"
+            resizeFile = "/home/www/picpuk/" + "pics/" + str(picId) + "_500x500.jpg"
             
             subprocess.call("convert " + srcFile + " -resize '500x500' " + resizeFile, shell=True)
             #subprocess.call(["convert", srcFile, "-resize", "'200x200'", resizeFile])
@@ -42,7 +42,7 @@ class pics(object):
     def get(self, fileName):
         cherrypy.response.headers['Content-Type'] = "image/jpeg"
         
-        filePath = cherrypy.request.app.config["hyperload"]["base_dir"] + "pics/" + fileName
+        filePath = "/home/www/picpuk/" + "pics/" + fileName
         
         if os.path.exists(filePath):
             return open(filePath, "rb").read()
@@ -53,7 +53,7 @@ class pics(object):
     def getbyid(self, id):
         cherrypy.response.headers['Content-Type'] = "image/jpeg"
         
-        filePath = cherrypy.request.app.config["hyperload"]["base_dir"] + "pics/" + id + ".jpg"
+        filePath = "/home/www/picpuk/" + "pics/" + id + ".jpg"
         
         if os.path.exists(filePath):
             return open(filePath, "rb").read()

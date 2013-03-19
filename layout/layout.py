@@ -12,7 +12,7 @@ def getenv():
     global env
     
     if env is None:
-        env = Environment(loader = FileSystemLoader(cherrypy.request.app.config["hyperload"]["base_dir"] + \
+        env = Environment(loader = FileSystemLoader("/home/www/picpuk/" + \
             "layout/templates"))
         env.globals["isAuthorized"] = auth_authorization.isAuthorized
         

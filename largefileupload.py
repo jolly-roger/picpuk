@@ -34,7 +34,7 @@ class largeFileUpload(object):
         # CherryPy reads the uploaded file into a temporary file;
         # myFile.file.read reads from that.
         size = 0
-        srcFile = cherrypy.request.app.config["hyperload"]["base_dir"] + "pics/" + sourceData.filename
+        srcFile = "/home/www/picpuk/" + "pics/" + sourceData.filename
             
         srcFileObj = open(srcFile, "wb", 0)
         
@@ -56,7 +56,7 @@ class largeFileUpload(object):
     def get(self, fileName):
         cherrypy.response.headers['Content-Type'] = "application/octet-stream"
         
-        filePath = cherrypy.request.app.config["hyperload"]["base_dir"] + "pics/" + fileName
+        filePath = "/home/www/picpuk/" + "pics/" + fileName
         
         if os.path.exists(filePath):
             return open(filePath, "rb").read()
