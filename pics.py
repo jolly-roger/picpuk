@@ -5,8 +5,8 @@ import subprocess
 import os
 
 
-from urllib.request import urlopen, Request
-from urllib.parse import urlencode
+import smtplib
+from email.mime.text import MIMEText
 import traceback
 
 
