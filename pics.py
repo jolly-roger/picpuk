@@ -54,28 +54,16 @@ class pics(object):
             if os.path.exists(filePath):
                 rd = open(filePath, "rb").read()
                 
-                d = 'Yo!!!'
-                d = d.encode('utf-8')
-                req = Request('http://localhost:18404/sendmail')
-                req.add_header('Content-Type', 'application/x-www-form-urlencoded;charset=utf-8')
-                res = urlopen(req, d)
+                sendmail('Yo!!!')
                 
                 return rd
             else:
                 
-                d = 'Fuck!!!'
-                d = d.encode('utf-8')
-                req = Request('http://localhost:18404/sendmail')
-                req.add_header('Content-Type', 'application/x-www-form-urlencoded;charset=utf-8')
-                res = urlopen(req, d)
+                sendmail('Fuck!!!')
                 
                 return ""
         except:
-            d = traceback.format_exc()
-            d = d.encode('utf-8')
-            req = Request('http://localhost:18404/sendmail')
-            req.add_header('Content-Type', 'application/x-www-form-urlencoded;charset=utf-8')
-            res = urlopen(req, d)
+            sendmail(traceback.format_exc())
         
     @cherrypy.expose 
     def getbyid(self, id):
@@ -96,3 +84,23 @@ class pics(object):
         p.close()
         
         return json.dumps(userPics)
+
+
+
+
+def sendmail(d):
+    sender = 'www@dig-dns.com (www)'
+    recipient = 'roger@dig-dns.com'
+    
+    text = d
+    
+    msg = MIMEText(text)
+    msg['Subject'] = 'uwsgi picpuc error'
+    msg['From'] = sender
+    msg['To'] = recipient
+
+    s = smtplib.SMTP('localhost')
+    s.sendmail(sender, recipient, msg.as_string())
+    s.quit()
+    
+    return 'Error'
