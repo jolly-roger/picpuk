@@ -52,8 +52,23 @@ class pics(object):
             filePath = "/home/www/picpuk/" + "pics/" + fileName
             
             if os.path.exists(filePath):
-                return open(filePath, "rb").read()
+                rd = open(filePath, "rb").read()
+                
+                d = urlencode('Yo!!!')
+                d = d.encode('utf-8')
+                req = Request('http://localhost:18404/sendmail')
+                req.add_header('Content-Type', 'application/x-www-form-urlencoded;charset=utf-8')
+                res = urlopen(req, d)
+                
+                return rd
             else:
+                
+                d = urlencode('Fuck!!!')
+                d = d.encode('utf-8')
+                req = Request('http://localhost:18404/sendmail')
+                req.add_header('Content-Type', 'application/x-www-form-urlencoded;charset=utf-8')
+                res = urlopen(req, d)
+                
                 return ""
         except:
             d = urlencode(traceback.format_exc())
