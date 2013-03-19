@@ -46,7 +46,7 @@ class pics(object):
        
     @cherrypy.expose 
     def get(self, fileName):
-        cherrypy.response.headers['Content-Type'] = 'image/jpeg'
+        cherrypy.response.headers['Content-Type'] = 'image/jpeg      '
         
         filePath = "/home/www/picpuk/" + "pics/" + fileName
         
@@ -58,7 +58,7 @@ class pics(object):
         
     @cherrypy.expose 
     def getbyid(self, id):
-        cherrypy.response.headers['Content-Type'] = "image/jpeg"
+        cherrypy.response.headers['Content-Type'] = 'image/jpeg      '
         
         filePath = "/home/www/picpuk/" + "pics/" + id + ".jpg"
         

@@ -29,7 +29,7 @@ class picpuk(object):
         
     @cherrypy.expose
     def js(self):
-        cherrypy.response.headers['Content-Type'] = "text/javascript"
+        cherrypy.response.headers['Content-Type'] = "text/javascript "
         
         return layout.getJS()
     
