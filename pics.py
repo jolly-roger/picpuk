@@ -46,24 +46,15 @@ class pics(object):
        
     @cherrypy.expose 
     def get(self, fileName):
-        try:
-            cherrypy.response.headers['Content-Type'] = "image/jpeg"
-            
-            filePath = "/home/www/picpuk/" + "pics/" + fileName
-            
-            if os.path.exists(filePath):
-                rd = open(filePath, "rb").read()
-                
-                sendmail('Yo!!!')
-                
-                return rd
-            else:
-                
-                sendmail('Fuck!!!')
-                
-                return ""
-        except:
-            sendmail(traceback.format_exc())
+        cherrypy.response.headers['Content-Type'] = "image/jpeg"
+        
+        filePath = "/home/www/picpuk/" + "pics/" + fileName
+        
+        if os.path.exists(filePath):
+            rd = open(filePath, "rb").read()
+            return rd
+        else:
+            return ""
         
     @cherrypy.expose 
     def getbyid(self, id):
