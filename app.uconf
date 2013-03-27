@@ -1,6 +1,0 @@
-[uwsgi]
-socket = 127.0.0.1:18010
-chdir = /home/www
-wsgi = picpuk
-callable = app
-enable-threads = true

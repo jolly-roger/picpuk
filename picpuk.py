@@ -61,4 +61,5 @@ def wsgi():
         'tools.sessions.timeout': 30,
         'response.timeout': 3600}})
     tree.bind_address = (app.config['global']['server.socket_host'], app.config['global']['server.socket_port'])
+    cherrypy.log.screen = False
     return tree
